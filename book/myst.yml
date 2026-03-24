@@ -1,0 +1,40 @@
+version: 1
+project:
+  title: 'AI for Official Statistics'
+  authors:
+    - name: Brock Webb
+  github: brockwebb/ai4stats
+  jupyter: false
+  exports:
+    - format: typst
+      template: plain_typst_book
+      output: exports/ai4stats.pdf
+      cover: images/cover-web.png
+  toc:
+    - file: cover.md
+    - file: foreword.md
+    - file: version.md
+    - file: intro.md
+    - file: chapter-01.md
+    - file: chapter-02.md
+    - file: chapter-03.md
+    - file: chapter-04.md
+    - file: chapter-05.md
+    - file: chapter-06.md
+    - file: chapter-07.md
+    - file: chapter-08.md
+    - file: chapter-09.md
+    - file: chapter-10.md
+    - file: chapter-11.md
+    - file: chapter-12.md
+    - file: chapter-13.md
+    - file: chapter-14.md
+    - file: chapter-15.md
+    - file: bibliography.md
+    - file: glossary.md
+    - file: book_index.md
+site:
+  options:
+    logo: logo.png
+    folders: true
+  template: book-theme
