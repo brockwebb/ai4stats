@@ -15,6 +15,7 @@ import sys
 import shutil
 import subprocess
 import yaml
+from datetime import date
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOOK_DIR = os.path.join(REPO_ROOT, "book")
@@ -532,6 +533,13 @@ margin-bottom: 1in
         print(f"  Cleaned up: {combined_path}")
 
     strip_blank_first_page(output_pdf)
+
+    # Copy to datestamped version so committed ai4stats.pdf is not overwritten
+    today = date.today().strftime("%Y-%m-%d")
+    dated_name = f"ai4stats_{today}.pdf"
+    dated_path = os.path.join(EXPORTS_DIR, dated_name)
+    shutil.copy2(output_pdf, dated_path)
+    print(f"  Datestamped copy: {dated_path}")
 
 
 def escape_typst(text):
