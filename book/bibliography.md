@@ -13,8 +13,8 @@
 - Executive Office of the President. (2025). *Executive Order 14275: Restoring Common Sense to Federal Procurement.* https://www.whitehouse.gov/presidential-actions/2025/04/restoring-common-sense-to-federal-procurement/
 - Federal Committee on Statistical Methodology. *Statistical Policy Working Papers.* Available at fcsm.gov.
 - Federal Committee on Statistical Methodology. (2025). *FCSM 25-03: AI-Ready Federal Statistical Data: An Extension of Communicating Data Quality.* https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf
-- NIST. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0).* NIST AI 100-1. https://doi.org/10.6028/NIST.AI.100-1
-- NIST. (2024). *Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile.* NIST AI 600-1. https://doi.org/10.6028/NIST.AI.600-1
+- NIST. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0).* NIST AI 100-1. https://csrc.nist.gov/pubs/ai/100/1/final
+- NIST. (2024). *Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile.* NIST AI 600-1. https://csrc.nist.gov/pubs/ai/600/1/final
 - Office of Management and Budget. (2024). *Memorandum M-24-10: Advancing Governance, Innovation, and Risk Management for Agency Use of Artificial Intelligence.* (Rescinded April 2025; replaced by M-25-21.) https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf
 - Office of Management and Budget. (2025). *Memorandum M-25-21: Accelerating Federal Use of AI through Innovation, Governance, and Public Trust.* https://www.whitehouse.gov/omb/information-resources/guidance/memoranda/
 - Office of Management and Budget. (2025). *Memorandum M-25-22: Driving Efficient Acquisition of Artificial Intelligence in Government.* https://www.whitehouse.gov/omb/information-resources/guidance/memoranda/
@@ -113,7 +113,7 @@
 
 - NIOSH. (2024). NIOSH Industry and Occupation Computerized Coding System (NIOCCS). U.S. Department of Health and Human Services, CDC/NIOSH. https://csams.cdc.gov/nioccs/About.aspx
 - Friesen, M.C., et al. (2022). Beware the Grizzlyman: A comparison of job- and industry-based noise exposure estimates using manual coding and the NIOSH NIOCCS machine learning algorithm. *Annals of Work Exposures and Health, 66*(7), 903-914. https://pubmed.ncbi.nlm.nih.gov/35537195/
-- Coutinho, I., & Martins, B. (2024). ICD coding of death certificates with generative language models. *PLOS Digital Health, 3*(2). https://journals.plos.org/digitalhealth/article?id=10.1371/journal.pdig.0001245
+- Coutinho, I., & Martins, B. (2024). ICD coding of death certificates with generative language models. *PLOS Digital Health, 3*(2). https://journals.plos.org/digitalhealth/article/info:doi/10.1371/journal.pdig.0001245
 - Pedersen, B.R., Bøgh Andersen, E., Rua, A.G., Jensen, K., & Gjøl Christiansen, M. (2023). Coding Historical Causes of Death Data with Large Language Models. In: *Bridging the Gap Between AI and Reality (AISoLA 2023). Lecture Notes in Computer Science, vol 14129.* Springer.
 - NCHS. (2025). Instructions for Classifying the Underlying Cause-of-Death, ICD-10, 2025. CDC. https://www.cdc.gov/nchs/nvss/manuals/2025/2a-2025.html
 - Bureau of Labor Statistics. "Occupational Employment and Wage Statistics Technical Notes." https://www.bls.gov/oes/oes_doc.htm
@@ -148,7 +148,7 @@
 ## AI Transparency and Governance
 
 - Anthropic, Coreweave, et al. (2025). *Navigating the Transparency-Privacy Trade-off in AI Systems.* arXiv:2601.18127 [URL to be verified]. https://arxiv.org/abs/2601.18127
-- Webb, B. (2026). *When AI Enters Federal Statistics: A Crosswalk Between Data Quality and AI Trustworthiness Frameworks.* Zenodo. https://doi.org/10.5281/zenodo.18772590
+- Webb, B. (2026). *When AI Enters Federal Statistics: A Crosswalk Between Data Quality and AI Trustworthiness Frameworks.* Zenodo. https://zenodo.org/records/18772590
 
 ## Model Selection and Deployment
 
