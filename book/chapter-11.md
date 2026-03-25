@@ -101,7 +101,7 @@ See `examples/chapter-11/01_dataset.py` to generate and inspect the full dataset
 
 Before a neural network can process text, it must convert characters or words to integer indices. We use *character-level tokenization* for this demonstration: each character becomes a separate token.
 
-Character-level tokenization is simple to understand and handles misspellings and abbreviations naturally. Production systems use *subword tokenization* (BPE or WordPiece), which splits words like "restaurant" into "rest" + "aurant." This middle ground handles rare words without an explosion in vocabulary size.
+Character-level tokenization is simple to understand and handles misspellings and abbreviations naturally. Production systems use *subword tokenization* (BPE or WordPiece; Sennrich, Haddow & Birch, 2016), which splits words like "restaurant" into "rest" + "aurant." This middle ground handles rare words without an explosion in vocabulary size.
 
 **Character token example:**
 
@@ -164,7 +164,7 @@ See `examples/chapter-11/03_embeddings_positional.py` for the full pattern acros
 
 ## 6. Scaled dot-product attention
 
-Attention is the core innovation of transformers. It lets each token in a sequence "look at" other tokens and decide how much to weight their information when computing its own representation.
+Attention is the core innovation of transformers (Vaswani et al., 2017). It lets each token in a sequence "look at" other tokens and decide how much to weight their information when computing its own representation.
 
 Given three matrices Q (queries), K (keys), V (values):
 
@@ -231,7 +231,7 @@ H'  = LayerNorm(H  + MHA(H))
 H'' = LayerNorm(H' + FFN(H'))
 ```
 
-The *residual connection* (`H + ...`) helps gradients flow during training -- it ensures that even if the attention sub-layer learns nothing initially, the signal still passes through. *Layer normalization* stabilizes activations by normalizing across the embedding dimension. The *feed-forward network* (FFN) applies a pointwise nonlinear transformation to each position independently after attention.
+The *residual connection* (He et al., 2016) helps gradients flow during training -- it ensures that even if the attention sub-layer learns nothing initially, the signal still passes through. *Layer normalization* (Ba, Kiros & Hinton, 2016) stabilizes activations by normalizing across the embedding dimension. The *feed-forward network* (FFN) applies a pointwise nonlinear transformation to each position independently after attention.
 
 For classification, the per-position representations are averaged over all non-padding tokens (*mean pooling*). This single vector is then passed through a linear classification head to produce logits over the output categories.
 
@@ -256,7 +256,7 @@ See `examples/chapter-11/06_model.py` for the full architecture, parameter break
 
 ## 9. Case study: training a mini transformer
 
-The model in `examples/chapter-11/06_model.py` is trained for 30 epochs on the 120-example training set using cross-entropy loss and the Adam optimizer.
+The model in `examples/chapter-11/06_model.py` is trained for 30 epochs on the 120-example training set using cross-entropy loss and the Adam optimizer (Kingma & Ba, 2015).
 
 **Training results (representative run):**
 
@@ -281,7 +281,7 @@ The model in `examples/chapter-11/06_model.py` is trained for 30 epochs on the 1
 | technology | 0.80 | 0.80 | 0.80 | 5 |
 | macro avg | 0.80 | 0.80 | 0.80 | 30 |
 
-With 150 training examples and a model trained from scratch, ~80% test accuracy is a reasonable result. Production systems fine-tune large pre-trained models (BERT, RoBERTa) on thousands of labeled examples, achieving accuracy in the 90-95% range.
+With 150 training examples and a model trained from scratch, ~80% test accuracy is a reasonable result. Production systems fine-tune large pre-trained models (BERT; Devlin et al., 2019) on thousands of labeled examples, achieving accuracy in the 90-95% range.
 
 See `examples/chapter-11/07_training.py` for the full training loop and `examples/chapter-11/08_evaluation.py` for the evaluation report and confusion matrix.
 
@@ -314,7 +314,7 @@ See `examples/chapter-11/09_attention_visualization.py` for top-3 attended token
 
 ## 11. NIOCCS: automated coding in federal production
 
-The concepts in this chapter are not theoretical. NIOSH's NIOCCS (National Institute and Occupation Computerized Coding System) is a production system that has been coding industry and occupation text to NAICS and SOC codes at scale for over a decade. Understanding its real-world performance grounds the chapter's architecture and human-in-the-loop design choices in operational reality.
+The concepts in this chapter are not theoretical. NIOSH's NIOCCS (National Industry and Occupation Computerized Coding System) is a production system that has been coding industry and occupation text to NAICS and SOC codes at scale for over a decade. Understanding its real-world performance grounds the chapter's architecture and human-in-the-loop design choices in operational reality.
 
 Federal statisticians working on survey text classification do not need to start from scratch. NIOCCS is available as a free public API and represents the baseline against which any proposed alternative must be compared.
 
@@ -324,7 +324,7 @@ Both examples also illustrate that human-in-the-loop design is not a theoretical
 
 ### What NIOCCS is
 
-NIOCCS is a free web-based application that assigns NAICS 2017 industry codes and SOC 2018 occupation codes to free-text descriptions. It is available via a public web API maintained by CDC/NIOSH. The system adopted machine learning in 2021 and has since processed over 150 million records from federal and academic researchers.
+NIOCCS is a free web-based application that assigns NAICS 2017 industry codes and SOC 2018 occupation codes to free-text descriptions (NIOSH, 2024). It is available via a public web API maintained by CDC/NIOSH. The system adopted machine learning in 2021 and has since processed over 100 million records from federal and academic researchers (CDC/NIOSH, 2022).
 
 The scope of the coding task is substantial: 365 NAICS 2017 codes for industry, 808 SOC 2018 codes for occupation. This is a much harder problem than the 6-class demo in this chapter. Confusable categories abound -- "dental assistant" and "dental hygienist" are different SOC codes, but the free-text descriptions respondents provide often do not contain enough information to distinguish them reliably.
 
@@ -338,7 +338,7 @@ This validates the confidence-routing approach modeled in `examples/chapter-11/1
 
 ### Input quality sensitivity
 
-One of the most consequential findings from NIOCCS evaluations is the sensitivity of ML coding to input quality. One study found 53.6% discordance with raw, unprocessed inputs, dropping to 5.0% with refined inputs. The study's conclusion is directly applicable to survey design: "Machine learning algorithms can systematically and consistently classify data but are highly dependent on the quality and amount of input data."
+One of the most consequential findings from NIOCCS evaluations is the sensitivity of ML coding to input quality. One study found 53.6% discordance with raw, unprocessed inputs, dropping to 5.0% with refined inputs (Friesen et al., 2022). The study's conclusion is directly applicable to survey design: "Machine learning algorithms can systematically and consistently classify data but are highly dependent on the quality and amount of input data."
 
 The implication for federal survey methodology is significant. Survey instrument design affects NLP performance downstream. Open-ended fields that elicit vague or terse responses ("works with computers") produce more ambiguous input than fields that prompt for specificity ("describe your main job duties"). A field that collected more structured information would yield cleaner inputs and higher autocoding rates -- even with the same underlying model.
 
@@ -346,9 +346,9 @@ This is a reason to involve data scientists early in survey questionnaire design
 
 ### ICD-10 cause-of-death coding
 
-NIOCCS codes industry and occupation. The National Center for Health Statistics uses a different production system for a related task: the ACME (Automated Classification of Medical Entities) system, which has been in production since 1968 and assigns ICD-10 codes to cause-of-death free-text narratives.
+NIOCCS codes industry and occupation. The National Center for Health Statistics uses a different production system for a related task: the ACME (Automated Classification of Medical Entities) system, which has been in production since the late 1960s and assigns ICD-10 codes to cause-of-death free-text narratives.
 
-Recent research has explored applying deep learning models to this task. The results illustrate an important general principle: deep learning models trained on large domain-specific datasets achieve 99% accuracy on this task, substantially outperforming general-purpose large language models. GPT-4 achieved approximately 83% accuracy on historical cause-of-death text in a controlled comparison, while purpose-trained ML models achieved approximately 89%. For structured classification tasks with well-defined coding schemes and abundant labeled data, a smaller purpose-trained model often outperforms a general-purpose LLM.
+Recent research has explored applying deep learning models to this task. The results illustrate an important general principle: purpose-trained models consistently outperform general-purpose LLMs on structured coding tasks with well-defined coding schemes. Pedersen et al. (2023) found that GPT-4 correctly assigned full ICD-10 codes to 75% of archaic causes of death and 90% of current causes, while Coutinho & Martins (2024) showed that fine-tuned encoder models matched or exceeded generative LLMs on Portuguese death certificate coding. For structured classification tasks with abundant labeled data, a smaller purpose-trained model often outperforms a general-purpose LLM.
 
 This is not an argument against LLMs in federal statistics. It is an argument for purpose-trained models when labeled data is available and the coding task is well-defined.
 
@@ -386,7 +386,7 @@ GPT-4-class performance cost approximately 30 USD per million tokens in 2023. By
 
 For a federal agency coding 500,000 survey write-ins, a fine-tuned 3B model running on agency hardware may be cheaper, faster, and more controllable than an API call to a 70B+ model. Small language models (SLMs), when quantized for deployment, consistently outperform general-purpose large models on structured classification tasks — including the kind of text-to-code assignment this chapter covers.
 
-Research from EMNLP 2025 found that AWQ-style quantization consistently preserves model fidelity and reasoning accuracy on SLMs across downstream classification tasks, outperforming pruning as a compression strategy. This makes SLMs viable for on-premises agency deployment without API dependencies.
+Sreenivas et al. (2025) found that AWQ-style quantization consistently preserves model fidelity and reasoning accuracy on SLMs across downstream classification tasks, outperforming pruning as a compression strategy. This makes SLMs viable for on-premises agency deployment without API dependencies.
 
 ```{admonition} What changes in large language models
 :class: note
@@ -399,7 +399,7 @@ Research from EMNLP 2025 found that AWQ-style quantization consistently preserve
 
 ### The architecture landscape is shifting — plan accordingly
 
-The transformer attention mechanism taught in this chapter is the foundation of every production system today. But the field is moving. Diffusion language models (dLLMs) generate and refine entire sequences in parallel rather than predicting tokens one at a time. Early results suggest 5-10x throughput gains over speed-optimized autoregressive models on equivalent reasoning benchmarks. This does not change how you evaluate a model for your task — it changes which models are on the frontier.
+The transformer attention mechanism taught in this chapter is the foundation of every production system today. But the field is moving. Diffusion language models (dLLMs) generate and refine entire sequences in parallel rather than predicting tokens one at a time (Tong et al., 2025). Early results claim substantial throughput gains over autoregressive models, though reported magnitudes vary by benchmark and implementation. This does not change how you evaluate a model for your task — it changes which models are on the frontier.
 
 Any deployment plan should include a retraining and re-evaluation schedule, not an assumption that today's model or architecture is permanent.
 
@@ -411,7 +411,7 @@ Before deploying any model on federal data, evaluate the model supply chain with
 
 **Model poisoning is a real threat.** Training data can be deliberately manipulated to introduce backdoors, biases, or targeted misclassification behaviors that are invisible during standard evaluation but activate on specific inputs. This is an active area of adversarial ML research, not a theoretical concern.
 
-**Apply existing federal supply chain frameworks.** NIST SP 800-218 (Secure Software Development Framework) provides a starting point. The questions are the same: Who trained it? On what data? Under what governance? Is the training process auditable?
+**Apply existing federal supply chain frameworks.** NIST SP 800-218 (NIST, 2022) provides a starting point. The questions are the same: Who trained it? On what data? Under what governance? Is the training process auditable?
 
 **Practical guidance for agencies:**
 - Prefer models with documented training data provenance and published model cards
@@ -502,9 +502,9 @@ Before recommending or approving any transformer-based text coding system for pr
 - *Character-level tokenization works for demonstrations* but subword tokenization (BPE, WordPiece) is standard in production because it handles the full vocabulary of English more efficiently.
 - *You do not need to train from scratch.* Fine-tune a pre-trained model (BERT, RoBERTa, or a federal-approved equivalent) on labeled descriptions. The pre-trained model already understands language; fine-tuning teaches it the specific coding schema.
 - *Confidence scores enable human-in-the-loop workflows.* Route high-confidence predictions automatically; flag low-confidence cases for human review. This hybrid approach is how NIOCCS and similar production systems operate.
-- *NIOCCS demonstrates that ML-based text coding is already in federal production at scale* (150M+ records). Performance is real but bounded: approximately 70% kappa for detailed NAICS codes, 60-72% autocoding rate. Knowing this baseline is essential for evaluating any proposed replacement or extension.
+- *NIOCCS demonstrates that ML-based text coding is already in federal production at scale* (100M+ records). Performance is real but bounded: approximately 70% kappa for detailed NAICS codes, 60-72% autocoding rate. Knowing this baseline is essential for evaluating any proposed replacement or extension.
 - *Input quality is a first-order concern.* Survey instrument design affects NLP performance downstream. One study found that refining raw inputs reduced NIOCCS discordance from 53.6% to 5.0%. Messy free-text fields produce degraded coding results regardless of model sophistication.
-- *Simpler purpose-trained models sometimes outperform general-purpose LLMs* on structured classification tasks. For ICD-10 cause-of-death coding, purpose-trained ML outperformed GPT-4 on historical text. The right model for a task depends on data availability and task specificity, not model size alone.
+- *Simpler purpose-trained models sometimes outperform general-purpose LLMs* on structured classification tasks. For ICD-10 cause-of-death coding, purpose-trained models matched or exceeded general-purpose LLMs on structured coding tasks. The right model for a task depends on data availability and task specificity, not model size alone.
 - *Retraining plans are essential.* NAICS, SOC, and ICD-10 codes are revised on regular cycles. A model trained on 2017 NAICS will produce systematic errors on records belonging to 2027 NAICS categories it has never seen.
 - *The same architecture powers ChatGPT and Claude.* GPT and Claude are transformers pretrained on enormous text corpora with an additional alignment step. The mini-encoder trained in this chapter is the same concept at approximately 1/1,000,000th the scale.
 
@@ -514,7 +514,7 @@ Before recommending or approving any transformer-based text coding system for pr
 
 **What is a transformer?** It is a type of neural network that processes text by having each word or character "look at" all the other words to understand context. "Server" in "restaurant server" means something different from "server" in "database server" -- the model learns this from the surrounding words.
 
-**Is this proven?** Yes. NIOSH's NIOCCS system has coded over 150 million records using this approach. Published performance is approximately 70% kappa for detailed codes. It reduces coder workload substantially while routing uncertain cases to human review.
+**Is this proven?** Yes. NIOSH's NIOCCS system has coded over 100 million records using this approach. Published performance is approximately 70% kappa for detailed codes. It reduces coder workload substantially while routing uncertain cases to human review.
 
 **How confident should we be in the results?** The model produces a confidence score for each prediction. Predictions with confidence above 80% are typically reliable. Predictions below 60% should go to human reviewers. This gives us a defensible hybrid process.
 

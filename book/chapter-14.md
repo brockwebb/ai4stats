@@ -54,7 +54,7 @@ Most AI evaluation failures are not technical. They are failures of governance a
 
 ## 3. NIST AI Risk Management Framework
 
-The National Institute of Standards and Technology published the AI Risk Management Framework (AI RMF 1.0, NIST AI 100-1) in January 2023. It is the federal government's primary framework for responsible AI development and deployment. The AI RMF was never rescinded -- it does not derive its authority from any executive order and remains in effect under any administration.
+The National Institute of Standards and Technology published the AI Risk Management Framework (AI RMF 1.0, NIST AI 100-1; NIST, 2023) in January 2023. It is the federal government's primary framework for responsible AI development and deployment. The AI RMF was never rescinded -- it does not derive its authority from any executive order and remains in effect under any administration.
 
 ### 3.1 The four functions
 
@@ -69,7 +69,7 @@ The AI RMF is not a checklist. It is risk-based: higher-stakes uses require more
 
 ### 3.2 GOVERN: who is accountable?
 
-GOVERN asks the foundational accountability questions. Is there a designated AI accountability structure in the agency? OMB guidance (M-25-21, which replaced M-24-10 in April 2025) requires a Chief AI Officer in each agency. Are roles and responsibilities documented -- who can approve AI deployments, who can suspend them? Are policies in place for human oversight, specifying which decisions require human review and how overrides are logged?
+GOVERN asks the foundational accountability questions. Is there a designated AI accountability structure in the agency? OMB guidance (M-25-21; OMB, 2025, replacing M-24-10; OMB, 2024) requires a Chief AI Officer in each agency. Are roles and responsibilities documented -- who can approve AI deployments, who can suspend them? Are policies in place for human oversight, specifying which decisions require human review and how overrides are logged?
 
 Federal-specific GOVERN questions go beyond the generic framework. Has legal counsel reviewed data use agreements? Is the system FedRAMP-authorized if cloud-based? Does it touch Title 13 or CIPSEA-protected data? Has OMB Statistical Policy Directive No. 1 been reviewed? Is the system covered by the agency's AI use case inventory, as required under federal AI governance guidance?
 
@@ -95,7 +95,7 @@ GOVERN maps primarily to interpretability, coherence, and accessibility. GOVERN 
 
 Note that interpretability appears under GOVERN, not only under MEASURE. This placement reflects that interpretability is a governance requirement: users must be able to explain AI-generated outputs to stakeholders and oversight bodies, not merely verify that the system performed accurately on a test set. See `examples/chapter-14/03_nist_fcsm_crosswalk.py` for the visualization and key mapping text.
 
-A recent FCSM working paper extends this framework in an important direction. FCSM 25-03, *AI-Ready Federal Statistical Data: An Extension of Communicating Data Quality* (2025), addresses how AI systems consume federal data -- the upstream direction. Where this chapter focuses on how federal statisticians evaluate AI systems as outputs, FCSM 25-03 addresses how federal data producers should prepare their data so that AI systems can use it reliably. The two documents are complementary: good AI system evaluation requires understanding both the quality of the system being evaluated and the quality of the data it will consume.
+A recent FCSM working paper extends this framework in an important direction. FCSM 25-03, *AI-Ready Federal Statistical Data: An Extension of Communicating Data Quality* (FCSM, 2025), addresses how AI systems consume federal data -- the upstream direction. Where this chapter focuses on how federal statisticians evaluate AI systems as outputs, FCSM 25-03 addresses how federal data producers should prepare their data so that AI systems can use it reliably. The two documents are complementary: good AI system evaluation requires understanding both the quality of the system being evaluated and the quality of the data it will consume.
 
 The pedagogical crosswalk presented in this chapter maps four RMF functions to six FCSM quality dimensions. A comprehensive systematic version mapping all 11 FCSM 20-04 dimensions to all 72 NIST AI RMF subcategories -- with 104 bidirectional edges -- is available in Webb (2026).
 
@@ -107,9 +107,9 @@ TEVV is the NIST AI RMF term for the systematic assessment activities that fall 
 
 ### 5.2 NIST AI 600-1: Generative AI Profile
 
-In July 2024, NIST released NIST AI 600-1, the Generative Artificial Intelligence Profile, as a companion resource to the AI RMF. AI 600-1 identifies 12 risk categories specific to generative AI systems, including confabulation (hallucination), information integrity risks, harmful bias, data privacy concerns, and others not present in traditional supervised ML systems. It provides more than 200 suggested actions mapped to the GOVERN-MAP-MEASURE-MANAGE structure, giving agencies a specific starting point for applying the RMF to LLM-based tools.
+In July 2024, NIST released NIST AI 600-1, the Generative Artificial Intelligence Profile (NIST, 2024), as a companion resource to the AI RMF. AI 600-1 identifies 12 risk categories specific to generative AI systems, including confabulation (hallucination), information integrity risks, harmful bias, data privacy concerns, and others not present in traditional supervised ML systems. It provides more than 200 suggested actions mapped to the GOVERN-MAP-MEASURE-MANAGE structure, giving agencies a specific starting point for applying the RMF to LLM-based tools.
 
-For federal statisticians evaluating generative AI tools -- LLM-powered coding systems, comment summarizers, report drafting assistants -- AI 600-1 provides the most specific NIST guidance currently available. The confabulation and information integrity categories are directly relevant to the SFV threat taxonomy introduced in Chapter 15. Note that the AI RMF is currently in active revision; updated RMF 1.1 guidance is expected through 2026. Agencies should monitor NIST AI publication updates accordingly.
+For federal statisticians evaluating generative AI tools -- LLM-powered coding systems, comment summarizers, report drafting assistants -- AI 600-1 provides the most specific NIST guidance currently available. The confabulation and information integrity categories are directly relevant to the SFV threat taxonomy introduced in Chapter 15. Note that NIST continues to iterate on the AI RMF through additional profiles and updated evaluation guidance. Agencies should monitor NIST AI publication updates accordingly.
 
 ## 6. The evaluation rubric: a practical tool
 
@@ -122,7 +122,7 @@ The 10 dimensions are:
 1. *Task fit.* Does the AI system address a real, documented operational need? Red flag: the vendor defines the problem.
 2. *Accuracy.* Measured against what baseline, on whose data, at what classification level? Red flag: a single aggregate number without subgroup breakdown.
 3. *Reproducibility.* Does the same input produce the same output across calls, versions, and time? Red flag: stochastic outputs without majority voting; model updates without revalidation.
-4. *Documentation.* Can an external reviewer understand what the system does and how it was built? Red flag: "proprietary" used to deflect documentation requests; no model card.
+4. *Documentation.* Can an external reviewer understand what the system does and how it was built? Red flag: "proprietary" used to deflect documentation requests; no model card (Mitchell et al., 2019) or datasheet (Gebru et al., 2021).
 5. *Failure modes.* What happens when the system is wrong? Who notices? How quickly? Red flag: no error analysis; silent failures.
 6. *Human oversight.* Where are the human decision points? Can they be bypassed? Red flag: fully automated pipeline with no human review step; override not documented.
 7. *Data governance.* What data does the system ingest, retain, and share? Red flag: survey responses retained by vendor; no FedRAMP authorization for cloud deployment.
@@ -154,7 +154,7 @@ See `examples/chapter-14/06_failure_modes.py` for the full structured display.
 
 ### 7.1 Procurement context
 
-OMB M-25-22, *Driving Efficient Acquisition of Artificial Intelligence in Government* (2025), provides federal AI procurement guidance that directly affects how agencies acquire AI systems. FAR (Federal Acquisition Regulation) reform is underway under EO 14275 (April 2025), affecting how AI systems are contractually specified and acquired. Federal statisticians who evaluate AI systems should understand that evaluation requirements can be written into contracts -- this is not just a post-award activity.
+OMB M-25-22 (OMB, 2025), *Driving Efficient Acquisition of Artificial Intelligence in Government*, provides federal AI procurement guidance that directly affects how agencies acquire AI systems. Broader FAR (Federal Acquisition Regulation) reform is underway under EO 14275, *Restoring Common Sense to Federal Procurement* (April 2025), which affects all federal purchasing including AI-related acquisitions. Federal statisticians who evaluate AI systems should understand that evaluation requirements can be written into contracts -- this is not just a post-award activity.
 
 The 10-dimension evaluation rubric maps directly to procurement. Dimension 4 (documentation -- model card, data sheet, failure analysis) is addressable through contract deliverables. Dimension 7 (data governance -- FedRAMP authorization, data use agreements, retention policies) is addressable through acquisition clauses and data handling terms. Dimension 8 (bias and fairness -- subgroup testing, disparate impact analysis) can be required as a condition of contract award. Federal statisticians who participate in procurement decisions should bring the rubric to the acquisition table, not only to the technical evaluation.
 

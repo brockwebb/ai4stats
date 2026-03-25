@@ -52,7 +52,7 @@ AI changes the attack surface in ways the traditional threat model does not anti
 
 A model inversion attack works by treating a trained model as a database that can be queried into revealing its training data. An adversary sends repeated queries to the model, observes the outputs, and uses patterns in those outputs to reconstruct sensitive features that were present in the training records.
 
-The practical implication for federal statistics is concrete. Suppose an agency trains a model to predict benefit eligibility from survey microdata and exposes it through an API. An adversary with access to that API does not need the underlying microdata. They can query the model systematically and, over many queries, reconstruct enough about the training distribution to infer sensitive individual-level information. Suppression rules on the original data do not protect against this; those rules were applied before the data reached the model.
+The practical implication for federal statistics is concrete. Suppose an agency trains a model to predict benefit eligibility from survey microdata and exposes it through an API. An adversary with access to that API does not need the underlying microdata. They can query the model systematically and, over many queries, reconstruct enough about the training distribution to infer sensitive individual-level information. Suppression rules on the original data do not protect against this; those rules were applied before the data reached the model. The residual inference risks that Garfinkel (2015) documented for de-identified data apply with equal force to trained models, and NIST AI 600-1 (NIST, 2024) explicitly recognizes model weights and outputs as confidentiality-sensitive assets.
 
 ### Membership Inference Attacks
 
@@ -60,7 +60,7 @@ A membership inference attack addresses a different question: was this specific 
 
 The example that makes this concrete for health data: if an agency trains a model on records linked to a disease registry and an adversary can determine that a specific person's record was in the training data, the adversary now knows that person has the disease. The model never outputs that fact directly. But the membership inference attack extracts it from the model's behavior.
 
-This is not a theoretical concern. Membership inference attacks have been demonstrated on commercially deployed models, on medical AI systems, and on models trained with standard machine learning pipelines. The companion scripts in `examples/chapter-10/` demonstrate the attack on a simple simulated dataset so you can observe the disclosure signal directly.
+This is not a theoretical concern. Membership inference attacks have been demonstrated on commercially deployed models, on medical AI systems, and on models trained with standard machine learning pipelines — extending the inference risks that existing federal de-identification guidance was designed to address (Garfinkel, 2015). The companion scripts in `examples/chapter-10/` demonstrate the attack on a simple simulated dataset so you can observe the disclosure signal directly.
 
 ### Leakage from Synthetic Outputs
 
@@ -70,9 +70,9 @@ This is particularly relevant for health and administrative record linkages wher
 
 ### Memorization in Neural Networks
 
-Large neural networks, including the language models now being evaluated for federal applications, can memorize training data verbatim. Research has demonstrated that LLMs will reproduce rare or unique records when prompted in specific ways, even records that appear in training data only once. For a model trained on confidential microdata, this means individual records can potentially be extracted from the model through careful prompting.
+Large neural networks, including the language models now being evaluated for federal applications, can memorize training data verbatim. Carlini et al. (2021) demonstrated that LLMs will reproduce rare or unique records when prompted in specific ways, even records that appear in training data only once. For a model trained on confidential microdata, this means individual records can potentially be extracted from the model through careful prompting.
 
-The key insight for SDL governance is that memorization is not a bug to be patched; it is a structural property of high-capacity models trained on large datasets. The mitigation is differential privacy during training (covered in Chapter 9) and strict access controls on the deployed model. But those mitigations need to be applied deliberately, which requires someone to ask the question.
+The key insight for SDL governance is that memorization is not a bug to be patched; it is a structural property of high-capacity models trained on large datasets. NIST AI 600-1 (NIST, 2024) flags this directly, treating model weights and training-data-derived outputs as information requiring confidentiality controls. The mitigation is differential privacy during training (covered in Chapter 9) and strict access controls on the deployed model. But those mitigations need to be applied deliberately, which requires someone to ask the question.
 
 The unifying point across all four attack types: trained models and API endpoints must be treated as potential disclosure channels on par with microdata releases. The SDL review process should begin when training data is selected, not when results are published.
 
@@ -207,7 +207,7 @@ This is forward-looking. The infrastructure does not yet exist at scale. But the
 :width: 100%
 :alt: SDL Risk Classification Decision Tree for AI Deployments at Federal Statistical Agencies
 
-SDL Risk Classification Decision Tree for AI Deployments at Federal Statistical Agencies. Decision nodes assess data sensitivity, model memorization capacity, access mode, and privacy controls. Terminal nodes map to four risk tiers with corresponding review requirements. Framework alignment annotations reference NIST AI RMF, NIST AI 600-1, FCSM Data Protection Toolkit, and OMB M-24-10.
+SDL Risk Classification Decision Tree for AI Deployments at Federal Statistical Agencies. Decision nodes assess data sensitivity, model memorization capacity, access mode, and privacy controls. Terminal nodes map to four risk tiers with corresponding review requirements. Framework alignment annotations reference NIST AI RMF, NIST AI 600-1, FCSM Data Protection Toolkit, and OMB M-25-21.
 ```
 
 ## 8. SDL Evaluation Checklist for AI Deployments

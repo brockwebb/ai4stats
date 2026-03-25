@@ -5,7 +5,7 @@
 > Full runnable code for all examples is in `examples/chapter-05/`.
 
 ```{admonition} Who is this for?
-If you have completed Chapters 1-4 (Part I: Python basics, pandas, Census APIs, and record keys), you are ready. This chapter introduces a different way of thinking about data: networks of connected entities rather than independent rows.
+If you have completed Chapters 1-4 (regression/classification, cross-validation, decision trees, and neural networks), you are ready. This chapter introduces a different way of thinking about data: networks of connected entities rather than independent rows.
 ```
 
 ## Learning goals
@@ -112,9 +112,9 @@ print(f"Average clustering coefficient: {cc:.3f}")
 
 ### 4.1 What is record linkage?
 
-Record linkage is the process of identifying records in one or more datasets that refer to the same real-world entity. Also called *entity resolution*, *data deduplication*, or *data integration*.
+Record linkage is the process of identifying records in one or more datasets that refer to the same real-world entity (Newcombe, Kennedy, Axford & James, 1959). Also called *entity resolution*, *data deduplication*, or *data integration*.
 
-The challenge: entities do not come with unique identifiers across all data sources. A person appears in the ACS as "Maria Garcia, DOB 1985-04-12, 123 Main St, Austin TX" and in tax records as "M. Garcia, 4/12/1985, 123 Main Street, Austin, Texas." These are the same person, but no exact match exists. The linkage algorithm must decide how similar is similar enough.
+The challenge: entities do not come with unique identifiers across all data sources. A person appears in the ACS as "Maria Garcia, DOB 1985-04-12, 123 Main St, Austin TX" and in tax records as "M. Garcia, 4/12/1985, 123 Main Street, Austin, Texas." These are the same person, but no exact match exists. The linkage algorithm must decide how similar is similar enough. For a comprehensive treatment of record linkage methodology, see Christen (2012).
 
 ### 4.2 Deterministic vs. probabilistic matching
 
@@ -125,7 +125,7 @@ The challenge: entities do not come with unique identifiers across all data sour
 
 Simple and fast, but misses links where any field has errors, abbreviations, or missing values. Most administrative data has enough quality variation that deterministic matching alone leaves substantial coverage gaps.
 
-*Probabilistic matching* computes a score for every candidate pair based on partial agreement across multiple fields:
+*Probabilistic matching* (Fellegi & Sunter, 1969) computes a score for every candidate pair based on partial agreement across multiple fields:
 - Name similarity: 0.85 (not exact, but close)
 - DOB exact match: 1.0
 - Address similarity: 0.72
@@ -226,7 +226,7 @@ Blocking is a recall-vs-cost trade-off. Two failure modes pull in opposite direc
 
 The choice depends on the cost of false negatives. For coverage estimates — counting how many people lack health coverage, or how many businesses filed taxes — missing a match means undercounting. Undercounting is usually the error that program managers care about most. In these contexts, err toward conservative blocking and accept a larger candidate set.
 
-A well-designed blocking strategy reduces the comparison space by 99%+ while missing fewer than 1% of true matches. The blocking recall can be estimated by comparing the candidate set against a gold standard sample of known true pairs.
+A well-designed blocking strategy can reduce the comparison space by over 99% while maintaining high blocking recall, though the achievable trade-off depends on data quality and the blocking keys chosen (Steorts, Ventura, Sadinle & Fienberg, 2014). The blocking recall can be estimated by comparing the candidate set against a gold standard sample of known true pairs.
 
 ---
 
@@ -259,7 +259,7 @@ The graph structure creates a failure mode called *transitive closure error*. Su
 
 Accepting both links creates a cluster of three: A, B, and C are now treated as one entity. Even if each individual link seems acceptable at the 0.80 threshold, the chain as a whole may be a false merge.
 
-Most operational systems handle this by finding the *maximum-weight spanning tree* of each cluster: keep only the highest-probability edges necessary to connect the cluster, which prunes the weakest false-match chain links while preserving the strongest true-match links. `examples/chapter-05/06_linkage_graph.py` demonstrates this with the `nx.maximum_spanning_tree` function.
+One common approach is to find the *maximum-weight spanning tree* of each cluster: keep only the highest-probability edges necessary to connect the cluster, which prunes the weakest false-match chain links while preserving the strongest true-match links. `examples/chapter-05/06_linkage_graph.py` demonstrates this with the `nx.maximum_spanning_tree` function.
 
 ---
 
@@ -301,9 +301,9 @@ The reported precision and recall refer to the *candidate set*, not the original
 
 Survey methodologists have long known that the response decision for one household member affects others. If you model persons as independent rows, you underestimate standard errors.
 
-Within a household, the latent response propensity is shared: all members face the same interviewer, the same day's mood, and the same household-level circumstances (language barriers, distrust of government data collection, health events). This creates *intraclass correlation* (ICC): responses within a cluster are more similar than responses drawn at random from the population.
+Within a household, the latent response propensity is shared (Groves & Couper, 1998): all members face the same interviewer, the same day's mood, and the same household-level circumstances (language barriers, distrust of government data collection, health events). This creates *intraclass correlation* (ICC): responses within a cluster are more similar than responses drawn at random from the population.
 
-The *design effect* (DEFF) quantifies the variance inflation:
+The *design effect* (DEFF; Kish, 1965) quantifies the variance inflation:
 
 $$\text{DEFF} = 1 + (\bar{n} - 1) \times \text{ICC}$$
 

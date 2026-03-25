@@ -143,7 +143,7 @@ no way to know which.
 Instead of one split, KFold divides the data into *k* equal parts (folds).
 Each fold serves as the test set exactly once. The model trains on the remaining *k-1* folds.
 The final score is the average across all *k* test folds, with the standard deviation indicating
-how consistent performance was across folds.
+how consistent performance was across folds (implemented in scikit-learn; Pedregosa et al., 2011).
 
 ```{code-block} python
 from sklearn.model_selection import KFold, cross_val_score
@@ -206,7 +206,7 @@ Use `GroupKFold` whenever your data has a clustering structure that could cause 
 - Area probability samples: multiple households per primary sampling unit (PSU)
 - Longitudinal surveys: multiple waves per respondent
 
-Failing to account for clustering can make a model look better than it really is.
+Failing to account for clustering can make a model look better than it really is (Kish, 1965).
 In production, it will underperform because the groups in the test dataset are genuinely new.
 ```
 
@@ -367,7 +367,7 @@ if features are on comparable scales. A coefficient of 0.5 on a binary feature (
 coefficient of 0.01 on age (18-80) are not directly comparable: the age coefficient applies
 across a 62-point range.
 
-*Permutation importance* measures actual contribution to performance. Shuffle one feature's values
+*Permutation importance* (Breiman, 2001) measures actual contribution to performance. Shuffle one feature's values
 at random, destroying any predictive signal it carries, and measure how much performance drops.
 A large drop means the model depended on that feature. A near-zero drop means the feature was
 not contributing much to predictions, regardless of what the coefficient says.
@@ -432,7 +432,7 @@ It answers the question "if we didn't have this variable, how much worse would t
 ```{admonition} How to explain feature importance to leadership
 :class: tip
 "The model found that prior response history is the strongest predictor of whether someone
-will respond in the current cycle. Contact attempts also matter: records that already required
+will respond in the current cycle (Groves & Couper, 1998). Contact attempts also matter: records that already required
 many contacts are more likely to need follow-up again. Age and urban status have smaller effects."
 
 "We verified this by temporarily removing each variable from the model and measuring how much
@@ -570,7 +570,7 @@ true value on average. If interpretability or stability matters, either choice i
 
 The risk of always choosing the minimum: CV MAE is estimated from data, so there is sampling
 variance in the estimate itself. The true best alpha might be 100 or 500 -- you cannot know
-from one run. A principled alternative is the "one-standard-error rule": choose the most
+from one run. A principled alternative is the "one-standard-error rule" (Hastie, Tibshirani & Friedman, 2009): choose the most
 regularized model (largest alpha) whose CV error is within one standard error of the minimum.
 This tends to produce simpler, more robust models.
 

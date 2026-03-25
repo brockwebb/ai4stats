@@ -7,6 +7,7 @@ __pycache__/
 # Internal working files (CC tasks, handoffs, project management)
 cc_tasks/
 handoffs/
+audits/
 CLAUDE.md
 CLAUDE_CODE_TASK.md
 HANDOFF_*.md

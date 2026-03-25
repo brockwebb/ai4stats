@@ -8,7 +8,7 @@ If you have worked through Chapters 1-6 (Parts I and II basics), you are ready. 
 
 ```{admonition} Why this matters for federal statistics
 :class: tip
-Missing data is not an exception in federal surveys. It is a constant. The American Community Survey has item nonresponse rates of 5-20% for income items. The Current Population Survey allocates millions of records each month. The National Health Interview Survey imputes health insurance status for a substantial fraction of respondents.
+Missing data is not an exception in federal surveys. It is a constant. The American Community Survey has item nonresponse rates of 5-20% for income items. The Current Population Survey uses hot-deck imputation across its monthly sample of roughly 100,000 person records, with allocation rates ranging from under 1% for demographic items to around 10% for earnings variables. The National Health Interview Survey imputes health insurance status for a substantial fraction of respondents.
 
 What you do about missing values determines whether your published estimates are trustworthy. Deleting incomplete records introduces bias. Filling in the mean underestimates variance. Hot-deck and regression imputation, done carefully, produce estimates that are defensible to Congress, OMB, and the public.
 
@@ -33,7 +33,7 @@ The question is never *whether* data will be missing. It is *how* you handle it.
 
 ### 1.1 Three types of missingness
 
-The statistical literature distinguishes three mechanisms. Understanding which one you have changes what you can safely do.
+The statistical literature distinguishes three mechanisms (Rubin, 1976; Little & Rubin, 2019). Understanding which one you have changes what you can safely do.
 
 **Missing Completely At Random (MCAR)**
 
@@ -152,7 +152,7 @@ See `examples/chapter-07/04_hot_deck.py` for the full implementation including c
 
 ### 3.2 Why hot-deck is the Census standard
 
-Hot-deck has several properties that make it attractive for federal statistics:
+Hot-deck has several properties that make it attractive for federal statistics (see Andridge & Little, 2010, for a comprehensive review):
 
 - *Imputed values are always plausible.* Because donors are real respondents, you never impute a negative income or an income that does not correspond to any real person.
 - *The method is transparent and auditable.* You can trace each imputed value back to a specific donor record. When an IG review asks "where did this imputed value come from?", hot-deck provides a clean answer.
@@ -234,7 +234,7 @@ Do not average the imputed variables across datasets before analysis. This colla
 
 ## 6. ML-based imputation
 
-Random Forest imputation treats imputation as a prediction problem: fit a random forest on complete cases, then predict missing values. It is sometimes called `missForest` after the R package that popularized the iterative version.
+Random Forest imputation treats imputation as a prediction problem: fit a random forest on complete cases, then predict missing values. The iterative version, missForest (Stekhoven & Bühlmann, 2012), alternates across variables until convergence.
 
 ### 6.1 When RF imputation helps
 

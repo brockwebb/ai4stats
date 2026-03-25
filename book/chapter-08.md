@@ -109,7 +109,7 @@ Detection: subgroup decomposition of every reported metric. This is not optional
 
 ## 3. Fairness metrics: what they measure and why they conflict
 
-There is no single definition of "fairness." Different definitions measure different properties, and each has a different normative justification. Understanding the definitions is prerequisite to knowing which one applies to your problem.
+There is no single definition of "fairness" (for a comprehensive treatment, see Barocas, Hardt & Narayanan, 2023). Different definitions measure different properties, and each has a different normative justification. Understanding the definitions is prerequisite to knowing which one applies to your problem.
 
 ### 3.1 The four core metrics
 
@@ -266,13 +266,13 @@ LLM-based occupation coding (Chapter 12) may perform differently on occupation d
 | Description type | Approximate coding accuracy |
 |-----------------|----------------------------|
 | Standard English, common occupation | ~95% |
-| Standard English, uncommon occupation | ~82% |
-| Non-standard English, common occupation | ~78% |
-| Non-standard English, uncommon occupation | ~61% |
-| Spanish-English code-switching | ~68% |
+| Standard English, uncommon occupation | ~80% |
+| Non-standard English, common occupation | ~75% |
+| Non-standard English, uncommon occupation | ~60% |
+| Spanish-English code-switching | ~70% |
 | Spanish (monolingual) | ~55% |
 
-*These are illustrative rates from published research patterns, not computed from this chapter's dataset.*
+*These are hypothetical rates illustrating documented patterns in automated coding research — the gradient from high accuracy on standard-English common occupations to lower accuracy on linguistically complex inputs is consistent across studies, though exact figures vary by system and dataset. They are not from a single source or computed from this chapter's dataset.*
 
 A coding system that performs well on standard English descriptions introduces systematic miscoding for communities with different linguistic patterns. The resulting occupational statistics are biased in ways that are invisible when only overall accuracy is reported.
 
@@ -309,7 +309,7 @@ Fairness documentation is not optional analysis. Federal agencies operate under 
 
 **OMB Statistical Policy Directive 15** establishes the standard race/ethnicity categories for federal data collection. Any AI model used in federal statistical production must be evaluated against these categories. Reporting performance only for "White" and "non-White" is not compliant with SPD-15.
 
-**Executive Order on Safe, Secure, and Trustworthy Artificial Intelligence** (October 2023) and subsequent OMB guidance require that agencies document the equity implications of AI systems before deployment, maintain records of bias evaluations, and establish processes for ongoing monitoring. The documentation requirement applies to AI tools used in administrative functions as well as statistical production.
+Federal AI governance requirements have changed across administrations — EO 14110 (October 2023) was rescinded in January 2025 and replaced by EO 14179; OMB M-24-10 was replaced by M-25-21. But the underlying accountability expectations are durable: agencies must document AI systems used in statistical production, maintain oversight structures (including the Chief AI Officer role, which survived the policy transition), and establish processes for ongoing monitoring. The NIST AI Risk Management Framework was never rescinded and remains the federal government's primary AI governance standard.
 
 **The practical implication:** a model card (Section 9) or equivalent documentation is not a nicety. It is the record of accountability. When a system produces disparate impact -- and given the impossibility theorem, every system does in some sense -- the model card shows whether decision-makers knew about it, documented the tradeoff, and made a deliberate governance choice. Absence of documentation is not neutrality; it is an undocumented choice.
 

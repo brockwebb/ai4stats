@@ -62,13 +62,13 @@ A federal survey analyst can read this, audit it, attach it to a methodology mem
 
 ### 2.1 How the tree chooses splits
 
-At each node, the algorithm searches for the feature and threshold that best separates the two classes. For classification it minimizes **Gini impurity**:
+At each node, the algorithm searches for the feature and threshold that best separates the two classes. For classification it minimizes **Gini impurity** (Breiman et al., 1984):
 
 $$G = 1 - \sum_{k} p_k^2$$
 
 where $p_k$ is the proportion of class $k$ in a node. A pure node (all one class) has $G = 0$. A maximally mixed node has $G = 0.5$. The algorithm picks the split that reduces Gini the most (weighted by node sizes).
 
-Alternatively, **entropy** ($H = -\sum_k p_k \log_2 p_k$) measures the same thing in information-theoretic terms. Gini is slightly faster to compute; in practice the results are nearly identical.
+Alternatively, **entropy** (Quinlan, 1986; $H = -\sum_k p_k \log_2 p_k$) measures the same thing in information-theoretic terms. Gini is slightly faster to compute; in practice the results are nearly identical.
 
 For regression trees, the criterion is **mean squared error** of the target within each node.
 
@@ -173,7 +173,7 @@ The full depth curve and `min_samples_leaf` comparison are in `examples/chapter-
 
 ## 5. Random Forest: an ensemble of trees
 
-A single tree is unstable: small changes in the training data produce very different trees. A **Random Forest** fixes this by training many trees on different bootstrap samples of the data and combining their predictions.
+A single tree is unstable: small changes in the training data produce very different trees. A **Random Forest** (Breiman, 2001) fixes this by training many trees on different bootstrap samples of the data and combining their predictions.
 
 Two sources of randomness:
 
@@ -206,7 +206,7 @@ Random Forests support two types of feature importance:
 
 **Gini (mean decrease in impurity)** is computed during training. At each split, the model records how much Gini impurity decreases. Features that appear at many high-level splits accumulate large scores. This is fast but can over-rank features with many unique values or correlated features, because it is computed on the training data only.
 
-**Permutation importance** shuffles each feature on the *test set* and measures how much performance (here, AUC-ROC) drops. A feature that the model truly relies on will cause a large drop when shuffled. A feature that the model learned as a proxy for something else may show a small drop even if Gini importance is high.
+**Permutation importance** (Breiman, 2001) shuffles each feature on the *test set* and measures how much performance (here, AUC-ROC) drops. A feature that the model truly relies on will cause a large drop when shuffled. A feature that the model learned as a proxy for something else may show a small drop even if Gini importance is high.
 
 For federal reports, use permutation importance. It is defensible: you can explain exactly what the number means ("when we shuffled `prior_response`, AUC dropped by 0.08, the largest drop of any feature"). Gini importance should be considered a diagnostic tool for model development, not the final reported number.
 
@@ -214,18 +214,18 @@ The side-by-side comparison is in `examples/chapter-03/03_random_forest.py`.
 
 ```{admonition} Gini importance vs. permutation importance
 :class: note
-Use permutation importance for any number you put in a methodology report. It is computed on the test set, it has a clear operational meaning (AUC drop when the feature is removed from the model), and it is not inflated by correlated features. Gini importance is a useful internal diagnostic during model development.
+Use permutation importance for any number you put in a methodology report. Prior response history is consistently the strongest predictor of survey nonresponse (Groves & Couper, 1998). It is computed on the test set, it has a clear operational meaning (AUC drop when the feature is removed from the model), and it is not inflated by correlated features. Gini importance is a useful internal diagnostic during model development.
 ```
 
 ---
 
 ## SHAP: Explaining Individual Predictions
 
-Gini importance and permutation importance are *global* measures -- they tell you which features matter on average across all predictions. For real policy decisions ("Why was tract T042 flagged for follow-up?"), you need *local*, per-prediction explanations. SHAP (SHapley Additive exPlanations) provides this.
+Gini importance and permutation importance are *global* measures -- they tell you which features matter on average across all predictions. For real policy decisions ("Why was tract T042 flagged for follow-up?"), you need *local*, per-prediction explanations. SHAP (SHapley Additive exPlanations; Lundberg & Lee, 2017) provides this.
 
 ### What SHAP is
 
-Each SHAP value represents one feature's contribution to pushing a single prediction above or below the base rate. The values are grounded in cooperative game theory (Shapley values), which gives them a theoretical guarantee that no other additive attribution method has: the contributions are fair, consistent, and sum exactly to the difference between the prediction and the base rate.
+Each SHAP value represents one feature's contribution to pushing a single prediction above or below the base rate. The values are grounded in cooperative game theory (Shapley, 1953), which gives them a theoretical guarantee that no other additive attribution method has: the contributions are fair, consistent, and sum exactly to the difference between the prediction and the base rate.
 
 ### Why it matters for policy
 

@@ -57,9 +57,9 @@ Adjacent sector confusion is the dominant error pattern in both human and LLM co
 
 Automated coding in federal statistical programs predates machine learning by decades. The Census Bureau developed deterministic coding systems for industry and occupation in the 1980s using keyword dictionaries and hierarchical matching rules. The National Center for Health Statistics built ACME (Automated Classification of Medical Entities) for cause-of-death coding starting in the 1960s. These rule-based systems reduced human review burden substantially but required constant manual maintenance as language and industries evolved.
 
-The current generation of systems adds machine learning on top of rules. NIOSH introduced the NIOSH Industry and Occupation Computerized Coding System (NIOCCS) in 2014, adopting ML-based coding in 2021; it has since processed more than 150 million records. The Census Bureau's automated coding uses a combination of exact matching, probabilistic matching, and classifier models trained on decades of human-coded data. The Bureau of Labor Statistics OEWS program uses a similar hybrid approach for occupation coding.
+The current generation of systems adds machine learning on top of rules. NIOSH introduced the NIOSH Industry and Occupation Computerized Coding System (NIOCCS) in 2014, adopting ML-based coding in 2021; it has since processed more than 100 million records (CDC/NIOSH, 2022). The Census Bureau's automated coding uses a combination of exact matching, probabilistic matching, and classifier models trained on decades of human-coded data. The Bureau of Labor Statistics OEWS program uses a similar hybrid approach for occupation coding.
 
-LLMs are the latest approach, not the first. The advantage they offer is generalization: an LLM can handle novel descriptions and informal language without requiring explicit rule maintenance. The risk is that they introduce different failure modes than rule-based systems, and those failure modes are less transparent. This chapter is about measuring those failure modes systematically. For NIOCCS specifically, see the Chapter 11 addendum.
+LLMs are the latest approach, not the first. The advantage they offer is generalization: an LLM can handle novel descriptions and informal language without requiring explicit rule maintenance. The risk is that they introduce different failure modes than rule-based systems, and those failure modes are less transparent. This chapter is about measuring those failure modes systematically. For NIOCCS specifically, see Chapter 11.
 
 ## 3. How LLM-based coding works
 
@@ -100,7 +100,7 @@ Prompts are code. They should be versioned, tested, and logged with the same dis
 
 *Prompt-model interaction* means that a prompt optimized for one model may perform differently on another. If your agency standardizes on a FedRAMP-authorized version of one model but evaluates on a different model's API, the evaluation results may not transfer. Always run final evaluations on the model you will deploy.
 
-*Template versus instance*: the template is the prompt structure with placeholders (the versioned artifact). The instance is the template with a specific description filled in (the per-record artifact). Log both. The template version identifies the methodology; the instance is what the model actually received. Industry guidance recommends managing prompts as versioned configurations with change logs, running regression test suites across prompt versions, and monitoring per-version quality metrics to detect silent degradations.
+*Template versus instance*: the template is the prompt structure with placeholders (the versioned artifact). The instance is the template with a specific description filled in (the per-record artifact). Log both. The template version identifies the methodology; the instance is what the model actually received. Industry guidance recommends managing prompts as versioned configurations with change logs, running regression test suites across prompt versions, and monitoring per-version quality metrics to detect silent degradations (Anthropic, 2024; OpenAI, 2025; Google, 2024).
 
 ## 4. Building the evaluation dataset
 
@@ -117,7 +117,7 @@ Key design notes on the simulation:
 
 ## 5. Evaluation: agreement metrics
 
-Accuracy alone is an insufficient measure for multi-class coding systems with imbalanced classes. A system that always predicts the most common sector would achieve whatever that sector's base rate is, with zero coding ability. Cohen's kappa corrects for chance agreement and is the standard metric for inter-coder reliability comparisons in survey research.
+Accuracy alone is an insufficient measure for multi-class coding systems with imbalanced classes. A system that always predicts the most common sector would achieve whatever that sector's base rate is, with zero coding ability. Cohen's kappa (Cohen, 1960) corrects for chance agreement and is the standard metric for inter-coder reliability comparisons in survey research.
 
 ### 5.1 Overall accuracy and Cohen's kappa
 
@@ -137,19 +137,19 @@ The kappa interpretation table that every coding evaluation report should includ
 | 0.21 -- 0.40 | Fair agreement |
 | 0.00 -- 0.20 | Slight agreement (near chance) |
 
-A kappa below 0.61 would indicate the system is not suitable for operational use without a high human review rate.
+A kappa below 0.61 — "moderate" or lower on the Landis and Koch (1977) scale — would indicate the system is not suitable for operational use without a high human review rate.
 
 ### 5.2 Per-sector accuracy
 
 Sector-level accuracy reveals where the system needs improvement. In the simulated results, Other Services (81) and Professional Services (54) are the lowest-performing sectors, consistent with published findings. Both involve heterogeneous employer types that share surface language with adjacent sectors.
 
-See `examples/chapter-12/04_agreement_metrics.py` for the per-sector bar chart and human-human comparison. The human-human inter-coder reliability baseline for NAICS 2-digit coding is approximately 90 percent pairwise agreement and 0.82 kappa, consistent with published studies reporting human-human kappa values in the 0.8-0.9+ range for broad occupation and industry groupings. This is the practical ceiling: no automated system should be expected to exceed it, because some cases are genuinely ambiguous even to trained coders.
+See `examples/chapter-12/04_agreement_metrics.py` for the per-sector bar chart and human-human comparison. Published studies report human-human kappa values in the substantial-to-almost-perfect range (roughly 0.6-0.8+) for broad occupation and industry groupings (Landis & Koch, 1977 interpretation scale). This is the practical ceiling: no automated system should be expected to exceed it, because some cases are genuinely ambiguous even to trained coders.
 
 ### 5.3 Cost and throughput analysis
 
 LLM coding at federal scale is primarily an economic decision. The accuracy question is whether the system meets quality thresholds; the cost question is whether it does so more efficiently than alternatives.
 
-Human coder costs for industry and occupation coding typically run $0.50 to $2.00 per record, accounting for training, productivity, quality assurance overhead, and supervision. The lower end represents experienced coders on straightforward tasks; the upper end reflects complex cases requiring specialist knowledge.
+Human coder costs for industry and occupation coding are estimated at $0.50 to $2.00 per record (author's engineering estimate based on federal coder salary scales and typical throughput rates of 400 to 800 records per day), accounting for training, productivity, quality assurance overhead, and supervision. The lower end represents experienced coders on straightforward tasks; the upper end reflects complex cases requiring specialist knowledge.
 
 As an early 2026 illustrative snapshot (verify current pricing before budgeting): end-to-end classification on a typical 1,000-token record costs on the order of fractions of a cent using compact or mini-tier models, and up to roughly one cent per record using flagship frontier models. Both represent a dramatic reduction from human coder costs of $0.50 to $2.00 per record. For a more detailed cost-performance framing, see the model selection section in Chapter 11.
 
@@ -220,7 +220,7 @@ The de-identification option -- removing PII before sending descriptions to an e
 
 The ACS, NHIS, and other major federal surveys collect responses in multiple languages. Spanish-language responses are particularly common in industry and occupation items. LLM accuracy varies significantly by language. Models trained predominantly on English text perform worse on Spanish, Mandarin, Vietnamese, and other languages that appear in federal survey data.
 
-Non-English responses require separate evaluation. Recent text-classification research shows that LLM classifiers often perform materially worse in lower-resource languages, with cross-language accuracy gaps of 10 to 40 percentage points depending on the setting (arxiv 2502.11830). Do not assume English-language accuracy generalizes to Spanish or other languages represented in federal survey data. Depending on the language distribution of your survey population, you may need separate prompts, separate evaluation datasets, or separate deployment decisions for each language. Some languages may require a different model entirely.
+Non-English responses require separate evaluation. Recent text-classification research shows that LLM classifiers often perform materially worse in lower-resource languages, with cross-language accuracy gaps of 10 to 40 percentage points depending on the setting (Batatia et al., 2025). Do not assume English-language accuracy generalizes to Spanish or other languages represented in federal survey data. Depending on the language distribution of your survey population, you may need separate prompts, separate evaluation datasets, or separate deployment decisions for each language. Some languages may require a different model entirely.
 
 ## 9. Designing a hybrid human-LLM workflow
 

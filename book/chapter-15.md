@@ -77,7 +77,7 @@ Before introducing State Fidelity Validity, it is worth understanding what class
 
 ### 3.1 The four classical types
 
-Each classical validity type has a core question, an assumption about the instrument, and a specific way that AI-assisted pipelines violate that assumption. See `examples/chapter-15/03_classical_validity.py` for the full display.
+Each classical validity type (Shadish, Cook & Campbell, 2002) has a core question, an assumption about the instrument, and a specific way that AI-assisted pipelines violate that assumption. See `examples/chapter-15/03_classical_validity.py` for the full display.
 
 The four types and their violations:
 
@@ -295,7 +295,7 @@ The six metrics and their threat mappings:
 - *False provenance rate*: fraction of outputs referencing decisions that never occurred. Maps to T2. Target: 0%; any false provenance triggers investigation.
 - *State reconciliation pass rate*: fraction of periodic reconciliation checks where model restatement matches canonical log. Maps to T1, T2, T3, T4. Target: > 0.95 pass rate.
 
-These metrics are not just academic proposals. They are the same metrics that would satisfy the NIST AI RMF Measure function and TEVV requirements for a federal AI deployment. The confabulation risk category in NIST AI 600-1 maps to T2 (False State Injection) in SFV terms: confabulation about external facts (hallucination) and confabulation about internal pipeline history are distinct failure modes requiring distinct countermeasures. If you are already doing TEVV for your pipeline's model outputs, adding SFV metrics extends that framework to cover the pipeline's accumulated state.
+These metrics are not just academic proposals. They are the same metrics that would satisfy the NIST AI RMF (NIST, 2023) Measure function and TEVV requirements for a federal AI deployment. The confabulation risk category in NIST AI 600-1 (NIST, 2024) maps to T2 (False State Injection) in SFV terms: confabulation about external facts (hallucination) and confabulation about internal pipeline history are distinct failure modes requiring distinct countermeasures. If you are already doing TEVV for your pipeline's model outputs, adding SFV metrics extends that framework to cover the pipeline's accumulated state.
 
 ---
 
@@ -333,7 +333,7 @@ For federal statistical production, a useful heuristic: if the failure would pre
 
 The following checklist operationalizes SFV into a concrete, usable tool. It is designed for federal statisticians who use AI pipelines for any part of their research workflow, from data cleaning through analysis to write-up. See `examples/chapter-15/13_reproducibility_checklist.py` for the full display.
 
-TEVV (Test, Evaluation, Verification, and Validation) is standard systems engineering practice defined in NIST AI RMF 1.0. It does not depend on any specific executive order; it is a measurement framework applicable to any federal AI deployment.
+TEVV (Test, Evaluation, Verification, and Validation) is standard systems engineering practice defined in NIST AI RMF 1.0 (NIST, 2023). It does not depend on any specific executive order; it is a measurement framework applicable to any federal AI deployment.
 
 Each item follows the same structure (check question, SFV dimension, pass criterion, fail consequence). The first two items illustrate the pattern:
 

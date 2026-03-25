@@ -5,7 +5,7 @@
 > Full runnable code for all examples is in `examples/chapter-04/`.
 
 ```{admonition} Who is this for?
-If you finished Chapters 1, 2, and 3 (Python/Pandas, Census APIs, record linkage), you are ready.
+If you finished Chapters 1, 2, and 3 (regression/classification, cross-validation, and decision trees), you are ready.
 By the end of this chapter you will have seen four model families (logistic regression, decision tree, Random Forest, neural network) all applied to the same survey dataset. Model selection — choosing which one to use — is the real skill this chapter builds.
 ```
 
@@ -35,7 +35,7 @@ Neural networks power many AI products that federal agencies are evaluating or p
 
 ### 1.1 The neuron
 
-A single artificial neuron takes a weighted sum of its inputs and passes it through a nonlinear function called an **activation function**:
+A single artificial neuron (Rosenblatt, 1958) takes a weighted sum of its inputs and passes it through a nonlinear function called an **activation function**:
 
 $$a = \sigma\!\left(\sum_{j} w_j x_j + b\right)$$
 
@@ -72,7 +72,7 @@ Training adjusts all the weights $w_j$ to minimize a *loss function* (prediction
 
 1. *Forward pass*: feed a batch of training records through the network, compute predicted outputs.
 2. *Loss*: compute the error between predictions and labels. Classification uses cross-entropy loss. Regression uses mean squared error.
-3. *Backpropagation*: compute the gradient of the loss with respect to every weight using the chain rule of calculus. This tells each weight "if you increase, does the loss go up or down?"
+3. *Backpropagation* (Rumelhart, Hinton & Williams, 1986): compute the gradient of the loss with respect to every weight using the chain rule of calculus. This tells each weight "if you increase, does the loss go up or down?"
 4. *Gradient descent*: nudge every weight slightly in the direction that reduces loss. The *learning rate* controls how big each nudge is.
 5. Repeat for many passes through the training data (*epochs*).
 
@@ -90,14 +90,14 @@ The dataset has n=1,200 synthetic survey respondents with five classification fe
 
 ```{admonition} Standardization is required for neural networks
 :class: warning
-Logistic regression and Random Forests can work with raw feature values. Neural networks cannot. Gradient descent is sensitive to feature scale — a feature measured in dollars (10,000–250,000) will dominate a feature measured in years (18–80) unless both are standardized. Always use `StandardScaler` before training an MLP. Fit the scaler on train, transform both train and test. The regression target (income) should also be standardized to match the weight initialization scale; de-standardize predictions before computing error metrics. See `examples/chapter-04/01_dataset_setup.py` for the complete setup.
+Logistic regression and Random Forests can work with raw feature values. Neural networks cannot. Gradient descent is sensitive to feature scale — a feature measured in dollars (10,000–250,000) will dominate a feature measured in years (18–80) unless both are standardized. Always use `StandardScaler` (scikit-learn; Pedregosa et al., 2011) before training an MLP. Fit the scaler on train, transform both train and test. The regression target (income) should also be standardized to match the weight initialization scale; de-standardize predictions before computing error metrics. See `examples/chapter-04/01_dataset_setup.py` for the complete setup.
 ```
 
 ---
 
 ## 3. MLP for classification: nonresponse prediction
 
-The MLP classifier in `examples/chapter-04/02_mlp_classification.py` uses two hidden layers of 100 and 50 units, ReLU activations, Adam optimizer, and early stopping. Early stopping monitors the held-out validation loss and halts training when it stops improving — the simplest overfitting defense in scikit-learn's MLP.
+The MLP classifier in `examples/chapter-04/02_mlp_classification.py` uses two hidden layers of 100 and 50 units, ReLU activations, the Adam optimizer (Kingma & Ba, 2015), and early stopping. Early stopping monitors the held-out validation loss and halts training when it stops improving — the simplest overfitting defense in scikit-learn's MLP.
 
 The training curve is the primary convergence diagnostic. Read it before trusting any metrics. A curve that is still falling steeply when training ends means the model was stopped too early; a curve that oscillates without settling means the learning rate is too high.
 
@@ -199,7 +199,7 @@ Neural Network (100,50) — weight matrix shapes:
 
 The logistic regression output is a methodology table. The MLP output is a weight matrix — 5,700 numbers that do not translate into decision rules or odds ratios.
 
-Partial dependence plots (PDPs) provide the best available aggregate explanation for a neural network. They show the marginal effect of one feature on predictions, averaged over all other features. The PDP for `prior_response` will tell you "as prior_response increases from 0 to 1, the predicted nonresponse probability drops by X points." That is useful. But a PDP cannot tell you why the model predicted 0.72 nonresponse probability for household 1042 specifically. For individual-case explanation, you need SHAP values (covered in later chapters) or a simpler model.
+Partial dependence plots (PDPs; Friedman, 2001) provide the best available aggregate explanation for a neural network. They show the marginal effect of one feature on predictions, averaged over all other features. The PDP for `prior_response` will tell you "as prior_response increases from 0 to 1, the predicted nonresponse probability drops by X points." That is useful. But a PDP cannot tell you why the model predicted 0.72 nonresponse probability for household 1042 specifically. For individual-case explanation, you need SHAP values (covered in later chapters) or a simpler model.
 
 ### 7.1 The complexity burden
 
@@ -253,12 +253,12 @@ To be specific about the cases where the complexity is justified:
 
 Before accepting a vendor's claim that a neural network outperforms existing methods on your data, ask these seven questions:
 
-1. *How much training data was used?* Neural networks need far more data than tabular methods. Under 100,000 records, simpler models usually win. Under 10,000, the neural network is almost certainly overfit.
+1. *How much training data was used?* On typical tabular datasets, tree-based models consistently match or outperform neural networks, especially at sample sizes under 10,000 (Grinsztajn, Oyallon & Varoquaux, 2022). Neural networks begin to close the gap only on larger datasets. Under 10,000 records with tabular features, the neural network is likely overfit.
 2. *What is the baseline comparison?* Did they compare to a Random Forest on the same data, with the same train-test split, evaluated on the same metric?
 3. *What is the performance gap?* If the improvement is less than one to two AUC points, is the additional complexity justified by the agency's actual decision requirements?
 4. *How is the model explained?* PDPs? SHAP? Or "trust the system"? For federal programs, "trust the system" is not an acceptable methodology defense.
 5. *What is the deployment environment?* GPU required? Cloud dependency? Is it on the approved software list? What does the ATO timeline look like?
-6. *What is the retraining cadence?* Neural networks can degrade faster than simpler models when the data distribution shifts (survey population changes, operational procedure changes). Who owns the retraining pipeline?
+6. *What is the retraining cadence?* Neural networks can degrade when the data distribution shifts (survey population changes, operational procedure changes), and standard MLPs on tabular data have shown larger robustness gaps than well-tuned tree-based models in benchmark comparisons (Grinsztajn, Oyallon & Varoquaux, 2022). Who owns the retraining pipeline?
 7. *What happens if the model fails?* Is there a fallback strategy? Can the agency revert to a rule-based system or a logistic regression while the neural network is retrained or audited?
 
 ---

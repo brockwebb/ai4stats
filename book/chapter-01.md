@@ -5,7 +5,7 @@
 > Full runnable code for all examples is in `examples/chapter-01/`.
 
 ```{admonition} Who is this for?
-No prerequisites beyond basic familiarity with data tables and summary statistics. If you've worked with spreadsheets, you have the background needed. This chapter introduces scikit-learn, the standard Python library for machine learning.
+No prerequisites beyond basic familiarity with data tables and summary statistics. If you've worked with spreadsheets, you have the background needed. This chapter introduces scikit-learn, the standard Python library for machine learning (Pedregosa et al., 2011).
 ```
 
 ```{admonition} Why this matters for federal statistics
@@ -222,8 +222,8 @@ When features correlate with each other, a plain linear regression can place unr
 
 ```{admonition} Regularization losses
 - *Linear*: minimize squared error. No constraint on coefficient size.
-- *Ridge*: add L2 penalty. Shrinks all coefficients toward zero, keeps all features.
-- *Lasso*: add L1 penalty. Can shrink some coefficients *exactly* to zero, performing feature selection.
+- *Ridge*: add L2 penalty (Hoerl & Kennard, 1970). Shrinks all coefficients toward zero, keeps all features.
+- *Lasso*: add L1 penalty (Tibshirani, 1996). Can shrink some coefficients *exactly* to zero, performing feature selection.
 ```
 
 In practice:
@@ -369,7 +369,7 @@ Logistic regression coefficients are on a log-odds scale. The *odds ratio* -- th
 - Odds ratio > 1 means the feature increases the probability of the positive class (responded).
 - Odds ratio < 1 means it decreases it.
 
-For example, an odds ratio of roughly 2.0 for `prior_response` means people who responded in the prior cycle are about twice as likely (in odds terms) to respond again, all else equal. Survey researchers call this "habitual respondents," and it is one of the most reliable predictors in any nonresponse model.
+For example, an odds ratio of roughly 2.0 for `prior_response` means people who responded in the prior cycle are about twice as likely (in odds terms) to respond again, all else equal. Survey researchers call this "habitual respondents," and it is one of the most reliable predictors in any nonresponse model (Groves & Couper, 1998).
 
 ### What to look for in a classification report
 

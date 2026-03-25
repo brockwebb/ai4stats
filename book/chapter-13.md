@@ -49,7 +49,7 @@ Walk into any meeting about AI adoption in a federal agency today and you will h
 
 *Agent* is one of the most overloaded terms in technology. It has meant different things in economics, multi-agent systems research, software engineering, and marketing copy. When there is no shared vocabulary, teams talk past each other. Requirements are vague because nobody agrees on what is being built. Accountability is unclear because nobody agreed on what the system was supposed to do.
 
-The definitions below come from the Agents 101 course developed for federal practitioners. Use them precisely. `examples/chapter-13/01_vocabulary.py` prints the full structured vocabulary table.
+The definitions below come from the Agents 101 course developed for federal practitioners, synthesizing vocabulary from vendor agent guides (Anthropic, 2024; OpenAI, 2025; Google, 2024) into precise terms for federal use. Use them precisely. `examples/chapter-13/01_vocabulary.py` prints the full structured vocabulary table.
 
 | Term | Definition | Key question | Federal example |
 |------|-----------|--------------|-----------------|
@@ -73,7 +73,7 @@ When someone proposes "an AI agent for automated coding," the vocabulary gives y
 A proposal that cannot answer these questions is not ready for a design review, let alone procurement.
 ```
 
-These definitions matter operationally. OMB M-24-10 (March 2024) required each federal agency to designate a Chief AI Officer (CAIO) and maintain an AI use case inventory. As of early 2026, agencies are still expected to maintain a designated CAIO under OMB's M-24-10 framework, even as newer OMB memoranda issued under EO 14179 refine and partially supersede aspects of that guidance. When your CAIO asks "is this system an AI agent?", the vocabulary above provides a precise answer: a system with no granted agency is a tool; a system with granted decision-making authority within a defined scope is an agent. The use case inventory needs this distinction.
+These definitions matter operationally. OMB M-24-10 (OMB, 2024) required each federal agency to designate a Chief AI Officer (CAIO) and maintain an AI use case inventory. OMB M-25-21 (OMB, 2025) rescinded and replaced M-24-10 but retained the CAIO requirement, assigning the CAIO specific responsibilities including certifying waivers and approving certain high-impact AI uses. When your CAIO asks "is this system an AI agent?", the vocabulary above provides a precise answer: a system with no granted agency is a tool; a system with granted decision-making authority within a defined scope is an agent. The use case inventory needs this distinction.
 
 ---
 
@@ -145,7 +145,7 @@ None of this means "never automate." It means "automate with explicit constraint
 
 ## 5. The six design principles
 
-These six principles do not change as tools evolve. They are grounded in what makes agentic systems fail, documented by the Microsoft AI Red Team and consistent with good engineering practice across domains.
+These six principles do not change as tools evolve. They are grounded in what makes agentic systems fail, documented by the Microsoft AI Red Team (2025) and consistent with good engineering practice across domains.
 
 See `examples/chapter-13/04_design_principles.py` for the full structured output with federal examples and failure consequences for each principle.
 
@@ -188,7 +188,7 @@ The prompt above is the agent. It specifies the taxonomy version, the output for
 
 ## 6. Failure modes
 
-The Microsoft AI Red Team has documented a taxonomy of failure modes in agentic AI systems. Almost every failure traces back to ignoring one of the six design principles.
+The Microsoft AI Red Team (2025) has documented a taxonomy of failure modes in agentic AI systems. Almost every failure traces back to ignoring one of the six design principles.
 
 See `examples/chapter-13/05_failure_modes.py` for the full taxonomy printed with federal examples and detection strategies. The table below summarizes the six failure categories.
 
@@ -226,7 +226,7 @@ See `examples/chapter-13/06_chat_vs_api.py` for the full comparison. The key dim
 :class: note
 Many federal environments restrict or prohibit API access to commercial AI models. This is a governance constraint, not a technical limitation. The appropriate response is not to route around it using chat interfaces. It is to engage the governance process.
 
-Chapter 14 (Evaluating AI Systems for Federal Use) provides the evaluation framework for making the case. If a workflow genuinely requires API access to be reproducible and auditable, that argument should be made through the agency's AI governance process, supported by the NIST AI RMF and FCSM quality standards.
+Chapter 14 (Evaluating AI Systems for Federal Use) provides the evaluation framework for making the case. If a workflow genuinely requires API access to be reproducible and auditable, that argument should be made through the agency's AI governance process, supported by the NIST AI RMF (NIST, 2023) and FCSM quality standards.
 
 Using chat interfaces to substitute for API pipelines does not solve the governance problem. It creates a reproducibility problem on top of the governance problem.
 ```
@@ -258,7 +258,7 @@ The problem: the Census Bureau operates 46 surveys. Approximately 7,000 question
 
 The bounded agency solution used two classifiers running independently. When both agreed with confidence above 0.90, the question was auto-assigned. When both agreed but the confidence indicated the question spanned two concepts, it was auto-flagged as dual-modal. When the classifiers disagreed, a bounded arbitrator handled the case. When the arbitrator found the case too ambiguous, it routed to human review.
 
-Illustrative results from this architecture:
+Illustrative results from this architecture (agreement measured using Cohen's kappa; Cohen, 1960; Landis & Koch, 1977 interpretation scale):
 
 | Metric | Value |
 |---|---|

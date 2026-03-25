@@ -86,7 +86,7 @@ Unsupervised methods find mathematical patterns. Whether a cluster is meaningful
 
 ## 4. Principal Component Analysis (PCA)
 
-PCA is a linear method that finds a new coordinate system where:
+PCA (Hotelling, 1933) is a linear method that finds a new coordinate system where:
 - The axes (principal components) are orthogonal.
 - PC1 points in the direction of greatest variance, PC2 in the direction of second greatest variance, and so on.
 - Each component is a weighted combination (linear combination) of the original features.
@@ -116,7 +116,7 @@ The scree plot for our 400-county dataset shows a sharp drop after PC1 and a mor
 - Does the first component explain a dominant share (> 30%), or is variance spread evenly across many components? Evenly spread variance suggests no single strong demographic axis — worth investigating before proceeding.
 - How many components do you need for 80% variance? That is a common threshold for downstream analysis (stratification, imputation class construction).
 
-`examples/chapter-06/03_pca.py` generates the scree plot and cumulative variance figure.
+`examples/chapter-06/03_pca.py` generates the scree plot and cumulative variance figure. All implementations use scikit-learn (Pedregosa et al., 2011).
 
 ```{code-block} python
 pca_full = PCA(random_state=42)
@@ -222,7 +222,7 @@ PCA is linear — it finds straight-line combinations of features. But demograph
 
 ### 5.1 t-SNE
 
-*Idea:* Define probabilities that two counties are neighbors in the original 15-dimensional space (using Gaussian kernels). Then find a 2D layout whose neighbor probabilities match. Points that are close in 15D will be close in 2D.
+t-SNE (van der Maaten & Hinton, 2008) defines probabilities that two counties are neighbors in the original 15-dimensional space (using Gaussian kernels). Then find a 2D layout whose neighbor probabilities match. Points that are close in 15D will be close in 2D.
 
 *Math:*
 - Convert distances to conditional probabilities with a Gaussian kernel per point:
@@ -239,7 +239,7 @@ PCA is linear — it finds straight-line combinations of features. But demograph
 
 ### 5.2 UMAP
 
-UMAP (Uniform Manifold Approximation and Projection) builds a weighted k-nearest-neighbor graph in the original space and finds a 2D layout that preserves that graph's structure. Compared to t-SNE:
+UMAP (Uniform Manifold Approximation and Projection; McInnes, Healy & Melville, 2018) builds a weighted k-nearest-neighbor graph in the original space and finds a 2D layout that preserves that graph's structure. Compared to t-SNE:
 - Faster on large datasets.
 - Better preservation of global structure (relative distances between clusters are more meaningful).
 - Supports `.transform()` — you can fit on training counties and embed new ones without refitting.
@@ -342,7 +342,7 @@ The operational workflow is:
 
 Hot-deck imputation replaces a missing value with an observed value from a "donor" — a similar record. Clusters define the donor pool: only counties in the same cluster are eligible donors, ensuring demographic similarity within the imputation class.
 
-This is the standard approach used in ACS and CPS imputation. The key requirement is that donors share the cluster assignment in the *original feature space*, not in any 2D embedding. Embedding-space distances do not preserve the demographic similarity relationships that justify within-class donation.
+This is the standard approach used in ACS and CPS imputation (see Rubin, 1987, for the foundational framework). The key requirement is that donors share the cluster assignment in the *original feature space*, not in any 2D embedding. Embedding-space distances do not preserve the demographic similarity relationships that justify within-class donation.
 
 `examples/chapter-06/08_operations.py` demonstrates this by simulating 10% missing income values, imputing from within-cluster donors, and comparing the imputed distribution to the true values.
 

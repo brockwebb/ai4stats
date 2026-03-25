@@ -10,6 +10,7 @@
 ## Federal Standards and Frameworks
 
 - Executive Office of the President. (2025). *Executive Order 14179: Removing Barriers to American Leadership in Artificial Intelligence.* https://www.whitehouse.gov/presidential-actions/2025/01/removing-barriers-to-american-leadership-in-artificial-intelligence/
+- Executive Office of the President. (2025). *Executive Order 14275: Restoring Common Sense to Federal Procurement.* https://www.whitehouse.gov/presidential-actions/2025/04/restoring-common-sense-to-federal-procurement/
 - Federal Committee on Statistical Methodology. *Statistical Policy Working Papers.* Available at fcsm.gov.
 - Federal Committee on Statistical Methodology. (2025). *FCSM 25-03: AI-Ready Federal Statistical Data: An Extension of Communicating Data Quality.* https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf
 - NIST. (2023). *Artificial Intelligence Risk Management Framework (AI RMF 1.0).* NIST AI 100-1. https://doi.org/10.6028/NIST.AI.100-1
@@ -18,6 +19,27 @@
 - Office of Management and Budget. (2025). *Memorandum M-25-21: Accelerating Federal Use of AI through Innovation, Governance, and Public Trust.* https://www.whitehouse.gov/omb/information-resources/guidance/memoranda/
 - Office of Management and Budget. (2025). *Memorandum M-25-22: Driving Efficient Acquisition of Artificial Intelligence in Government.* https://www.whitehouse.gov/omb/information-resources/guidance/memoranda/
 - Office of Management and Budget. *Statistical Policy Directive No. 15: Race and Ethnic Standards for Federal Statistics and Administrative Reporting.*
+
+## Survey Methodology
+
+- Andridge, R. R., & Little, R. J. A. (2010). A review of hot deck imputation for survey non-response. *International Statistical Review, 78*(1), 40–64.
+- Groves, R. M., & Couper, M. P. (1998). *Nonresponse in Household Interview Surveys.* Wiley.
+- Kish, L. (1965). *Survey Sampling.* Wiley.
+- Little, R. J. A., & Rubin, D. B. (2019). *Statistical Analysis with Missing Data* (3rd ed.). Wiley.
+- Rubin, D. B. (1976). Inference and missing data. *Biometrika, 63*(3), 581–592.
+
+## Record Linkage and Data Integration
+
+- Newcombe, H. B., Kennedy, J. M., Axford, S. J., & James, A. P. (1959). Automatic linkage of vital records. *Science, 130*, 954–959.
+- Fellegi, I. P., & Sunter, A. B. (1969). A theory for record linkage. *Journal of the American Statistical Association, 64*(328), 1183–1210.
+- Christen, P. (2012). *Data Matching: Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection.* Springer.
+- Steorts, R. C., Ventura, S. L., Sadinle, M., & Fienberg, S. E. (2014). A comparison of blocking methods for record linkage. In *Proceedings of the 2014 IEEE International Conference on Data Mining Workshop (ICDMW)* (pp. 1–8). IEEE.
+
+## Dimension Reduction and Unsupervised Learning
+
+- Hotelling, H. (1933). Analysis of a complex of statistical variables into principal components. *Journal of Educational Psychology, 24*, 417–441.
+- van der Maaten, L., & Hinton, G. (2008). Visualizing data using t-SNE. *Journal of Machine Learning Research, 9*, 2579–2605.
+- McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform manifold approximation and projection for dimension reduction. *arXiv preprint arXiv:1802.03426.*
 
 ## AI Agents and Agentic Systems
 
@@ -29,7 +51,11 @@
 ## Census and Survey Methodology
 
 - Abowd, J. M. (2018). The U.S. Census Bureau adopts differential privacy. *Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining.*
+- CDC/NIOSH. (2022). 100 million and counting! *NIOSH Science Blog.* https://www.cdc.gov/niosh/bulletin/2022/100-million-and-counting.html
+- Abowd, J. M., Benedetto, G., & Stinson, M. (2006). *The Creation and Use of the SIPP Synthetic Beta* (Technical report). U.S. Census Bureau.
 - Garfinkel, S. L. (2015). *De-identification of personal information.* NIST Internal Report 8053.
+- Raghunathan, T. E., Reiter, J. P., & Rubin, D. B. (2003). Multiple imputation for statistical disclosure limitation. *Journal of Official Statistics, 19*(1), 1–16.
+- U.S. Census Bureau. (2021). Key parameters set to protect privacy in 2020 Census results (press release, June 8, 2021). https://www.census.gov/newsroom/press-releases/2021/2020-census-key-parameters.html
 - U.S. Census Bureau. (2022). *2020 Census Post-Enumeration Survey Results.* Coverage Measurement Program.
 
 ## AI and Critical Thinking
@@ -41,16 +67,47 @@
 - Mitchell, M., et al. (2019). Model cards for model reporting. *Proceedings of the Conference on Fairness, Accountability, and Transparency.*
 - Gebru, T., et al. (2021). Datasheets for datasets. *Communications of the ACM, 64*(12), 86-92.
 
+## Research Design and Validity
+
+- Shadish, W. R., Cook, T. D., & Campbell, D. T. (2002). *Experimental and Quasi-Experimental Designs for Generalized Causal Inference* (1st ed.). Houghton Mifflin.
+
+## Statistical Methods
+
+- Cohen, J. (1960). A coefficient of agreement for nominal scales. *Educational and Psychological Measurement, 20*, 37–46.
+- Landis, J. R., & Koch, G. G. (1977). The measurement of observer agreement for categorical data. *Biometrics, 33*(1), 159–174.
+
 ## Machine Learning Methods
 
-- Pedregosa, F., et al. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research, 12*, 2825-2830.
 - Breiman, L. (2001). Random forests. *Machine Learning, 45*(1), 5-32.
+- Friedman, J. H. (2001). Greedy function approximation: A gradient boosting machine. *Annals of Statistics, 29*(5), 1189–1232.
+- Grinsztajn, L., Oyallon, E., & Varoquaux, G. (2022). Why do tree-based models still outperform deep learning on typical tabular data? *Advances in Neural Information Processing Systems, 35.*
+- Breiman, L., Friedman, J. H., Olshen, R. A., & Stone, C. J. (1984). *Classification and Regression Trees.* Wadsworth.
+- Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning: Data Mining, Inference, and Prediction* (2nd ed.). Springer. Available at https://hastie.su.domains/ElemStatLearn/
+- Hoerl, A. E., & Kennard, R. W. (1970). Ridge regression: Biased estimation for nonorthogonal problems. *Technometrics, 12*(1), 55–67.
+- Pedregosa, F., et al. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research, 12*, 2825-2830.
+- Quinlan, J. R. (1986). Induction of decision trees. *Machine Learning, 1*(1), 81–106.
 - Rubin, D. B. (1987). *Multiple Imputation for Nonresponse in Surveys.* Wiley.
+- Stekhoven, D. J., & Bühlmann, P. (2012). MissForest: Non-parametric missing value imputation for mixed-type data. *Bioinformatics, 28*(1), 112–118.
+- Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. *Journal of the Royal Statistical Society: Series B, 58*(1), 267–288.
+
+## Neural Networks and Deep Learning
+
+- Ba, J. L., Kiros, J. R., & Hinton, G. E. (2016). Layer normalization. *arXiv preprint arXiv:1607.06450.*
+- He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. In *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR 2016)* (pp. 770–778).
+- Kingma, D. P., & Ba, J. (2015). Adam: A method for stochastic optimization. In *Proceedings of the 3rd International Conference on Learning Representations (ICLR).* arXiv:1412.6980.
+- Rosenblatt, F. (1958). The perceptron: A probabilistic model for information storage and organization in the brain. *Psychological Review, 65*(6), 386–408.
+- Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1986). Learning representations by back-propagating errors. *Nature, 323*(6088), 533–536.
+
+## Explainability and Interpretability
+
+- Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model predictions. *Advances in Neural Information Processing Systems, 30.*
+- Shapley, L. S. (1953). A value for n-person games. In H. W. Kuhn & A. W. Tucker (Eds.), *Contributions to the Theory of Games II* (pp. 307–317). Princeton University Press.
 
 ## Natural Language Processing and Transformers
 
 - Vaswani, A., et al. (2017). Attention is all you need. *Advances in Neural Information Processing Systems, 30.*
 - Devlin, J., et al. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. *Proceedings of NAACL-HLT 2019.*
+- Sennrich, R., Haddow, B., & Birch, A. (2016). Neural machine translation of rare words with subword units. In *Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)* (pp. 1715–1725). Association for Computational Linguistics.
 
 ## Survey Text Coding and NLP
 
@@ -78,6 +135,8 @@
 
 ## Statistical Disclosure Limitation and Privacy
 
+- Carlini, N., Tramer, F., Wallace, E., Jagielski, M., Herbert-Voss, A., Lee, K., Roberts, A., Brown, T. B., Song, D., Erlingsson, Ú., Oprea, A., & Raffel, C. (2021). Extracting training data from large language models. *Proceedings of the 30th USENIX Security Symposium*, 2633–2650.
+- Snoke, J., Raab, G. M., Nowok, B., Dibben, C., & Slavković, A. (2018). General and specific utility measures for synthetic data. *Journal of the Royal Statistical Society: Series A, 181*(3), 663–688.
 - National Academies of Sciences, Engineering, and Medicine. (2024). *Toward a 21st Century National Data Infrastructure: Mobilizing Information for the Common Good.* National Academies Press. https://www.nationalacademies.org/read/27169/chapter/6
 - Hogan Lovells. (2024). *Model Inversion and Membership Inference: Understanding New AI Security Risks and Mitigating Vulnerabilities.* https://www.hoganlovells.com/en/publications/model-inversion-and-membership-inference-understanding-new-ai-security-risks-and-mitigating-vulnerabilities
 - Microsoft Research. (2024). *The Crossroads of Innovation and Privacy: Private Synthetic Data for Generative AI.* https://www.microsoft.com/en-us/research/blog/the-crossroads-of-innovation-and-privacy-private-synthetic-data-for-generative-ai/
@@ -103,5 +162,3 @@
 - NIST. (2022). SP 800-218: Secure Software Development Framework (SSDF) Version 1.1. https://csrc.nist.gov/publications/detail/sp/800-218/final
 
 ---
-
-*Note: This is a starter bibliography. Add references as chapters reference specific works. Use consistent citation format throughout.*

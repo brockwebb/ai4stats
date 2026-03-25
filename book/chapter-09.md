@@ -8,7 +8,7 @@ If you have worked through Chapters 1 and 8, you are ready. Chapter 1 introduced
 :class: tip
 Every federal statistical agency that releases microdata faces the same fundamental tension: the public has a right to access information they paid to collect, but the individuals who provided that information have a right to privacy. Traditional disclosure avoidance methods (cell suppression, data swapping, top-coding, noise infusion) reduce this tension by distorting the real data. Synthetic data offers a different answer: do not release the real data at all. Release statistically faithful imitations.
 
-Synthetic microdata is not a future research direction. The Census Bureau has produced synthetic data products for over two decades. OnTheMap (LEHD) is synthetic. The Survey of Income and Program Participation Synthetic Beta was one of the first federal synthetic data products. The 2020 Census Disclosure Avoidance System introduced differential privacy at scale, generating significant methodological debate. Every senior statistician in the federal system needs a working understanding of what synthetic data is, how it is evaluated, and what its limitations are.
+Synthetic microdata is not a future research direction. The Census Bureau has produced synthetic data products for over two decades. OnTheMap (LEHD) is synthetic. The Survey of Income and Program Participation Synthetic Beta (Abowd, Benedetto & Stinson, 2006) was one of the first federal synthetic data products. The 2020 Census Disclosure Avoidance System introduced differential privacy at scale, generating significant methodological debate. Every senior statistician in the federal system needs a working understanding of what synthetic data is, how it is evaluated, and what its limitations are.
 ```
 
 ## Learning goals
@@ -66,7 +66,7 @@ The choice between them is a policy decision as much as a technical one. Both ap
 
 ## 3. How synthetic data is generated: the sequential approach
 
-The most widely used synthesis method in federal statistics is sequential regression synthesis (also called parametric sequential synthesis). The idea: model each variable conditionally on previously synthesized variables, then sample new values from those models. No confidential record values are copied directly.
+The most widely used synthesis method in federal statistics is sequential regression synthesis (Raghunathan, Reiter & Rubin, 2003), also called parametric sequential synthesis. The idea: model each variable conditionally on previously synthesized variables, then sample new values from those models. No confidential record values are copied directly.
 
 ### 3.1 The synthesis algorithm
 
@@ -152,7 +152,7 @@ See `examples/chapter-09/05_utility_regression.py` for the full comparison.
 
 ### 4.4 The pMSE global utility metric
 
-A formal global utility metric: train a classifier to distinguish confidential records from synthetic records. If it cannot do better than random guessing, the synthetic data is statistically indistinguishable along the dimensions the classifier can detect.
+A formal global utility metric (Snoke et al., 2018): train a classifier to distinguish confidential records from synthetic records. If it cannot do better than random guessing, the synthetic data is statistically indistinguishable along the dimensions the classifier can detect.
 
 ```{code-block} text
 pMSE = mean( (P(record is synthetic) - 0.5)^2 )
@@ -187,7 +187,7 @@ See `examples/chapter-09/07_privacy_utility_tradeoff.py` for the full analysis.
 
 ### 5.2 Differential privacy: a formal approach
 
-Differential privacy (DP) provides mathematical bounds on privacy loss. The core guarantee: adding or removing any single person's record changes the probability of any output by at most a factor of e^epsilon.
+Differential privacy (DP; Dwork & Roth, 2014) provides mathematical bounds on privacy loss. The core guarantee: adding or removing any single person's record changes the probability of any output by at most a factor of e^epsilon.
 
 ```{code-block} text
 Epsilon (privacy budget):
@@ -217,10 +217,10 @@ The 2020 Census was the first large-scale production use of differential privacy
 
 ### 6.1 What the Bureau did
 
-The Census Bureau replaced its traditional disclosure avoidance system with a new Disclosure Avoidance System (DAS) based on formal differential privacy. Rather than swapping records or suppressing cells, the DAS:
+The Census Bureau replaced its traditional disclosure avoidance system with a new Disclosure Avoidance System (DAS) based on formal differential privacy (Abowd, 2018). Rather than swapping records or suppressing cells, the DAS:
 
 1. Computed true population counts at all geographic levels
-2. Added Laplace noise calibrated to a total privacy budget of approximately 17.14 epsilon
+2. Added calibrated noise with a total privacy-loss budget of epsilon = 19.61 for the redistricting data product, comprising epsilon = 17.14 for the persons file and epsilon = 2.47 for the housing unit data (U.S. Census Bureau, 2021)
 3. Used a post-processing algorithm (TopDown) to ensure consistency across geographic levels (state counts must sum to national totals, county counts must sum to state totals, etc.)
 
 The result was a set of published tables in which block-level counts differed from true counts due to the noise injection.
@@ -235,7 +235,7 @@ A secondary complaint was about transparency. Traditional data swapping had know
 
 The Bureau made defensible choices under real constraints:
 
-- The 2010 census disclosure avoidance system had been shown to have serious vulnerabilities. Database reconstruction attacks could recover most individual records from published tables. The vulnerability was known; the DAS was a genuine response to it.
+- The 2010 census disclosure avoidance system had been shown to have serious vulnerabilities — database reconstruction attacks could recover most individual records from published tables (Abowd, 2018). The vulnerability was known; the DAS was a genuine response to it.
 - Any disclosure avoidance method involves tradeoffs between accuracy and privacy. The difference with DP is that the tradeoff is explicit and auditable. Traditional methods obscured the tradeoff.
 - The privacy budget allocation was a policy decision, and the Bureau was transparent about what it was. Users disagreed with the allocation, not the principle.
 
