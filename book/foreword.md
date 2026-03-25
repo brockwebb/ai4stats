@@ -46,6 +46,6 @@ This is consistent with the book's central argument: AI assists, humans decide.
 
 ## Acknowledgments
 
-The idea that domain experts need their own AI curriculum was inspired by Zhiling Zheng's AI4CHEM course at Washington University in St. Louis. The State Fidelity Validity framework is my original contribution.
+The idea that domain experts need their own AI curriculum was inspired by Zhiling Zheng's AI4CHEM course at Washington University in St. Louis.
 
 *Throughout my career, I have been continually humbled and inspired by the generosity of others: those who shared their knowledge, offered honest feedback, and walked with me for portions of this journey. There are too many to name individually, and attempting to do so would inevitably leave someone out. You know who you are, and I am grateful. The only way I know to truly show that gratitude is to give back. This work is one small attempt to do so.*
