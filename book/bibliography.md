@@ -113,7 +113,7 @@
 
 - NIOSH. (2024). NIOSH Industry and Occupation Computerized Coding System (NIOCCS). U.S. Department of Health and Human Services, CDC/NIOSH. https://csams.cdc.gov/nioccs/About.aspx
 - Friesen, M.C., et al. (2022). Beware the Grizzlyman: A comparison of job- and industry-based noise exposure estimates using manual coding and the NIOSH NIOCCS machine learning algorithm. *Annals of Work Exposures and Health, 66*(7), 903-914. https://pubmed.ncbi.nlm.nih.gov/35537195/
-- Coutinho, I., & Martins, B. (2024). ICD coding of death certificates with generative language models. *PLOS Digital Health, 3*(2). https://journals.plos.org/digitalhealth/article/info:doi/10.1371/journal.pdig.0001245
+- Coutinho, I., & Martins, B. (2024). ICD coding of death certificates with generative language models. *PLOS Digital Health, 3*(2), e0001245.
 - Pedersen, B.R., Bøgh Andersen, E., Rua, A.G., Jensen, K., & Gjøl Christiansen, M. (2023). Coding Historical Causes of Death Data with Large Language Models. In: *Bridging the Gap Between AI and Reality (AISoLA 2023). Lecture Notes in Computer Science, vol 14129.* Springer.
 - NCHS. (2025). Instructions for Classifying the Underlying Cause-of-Death, ICD-10, 2025. CDC. https://www.cdc.gov/nchs/nvss/manuals/2025/2a-2025.html
 - Bureau of Labor Statistics. "Occupational Employment and Wage Statistics Technical Notes." https://www.bls.gov/oes/oes_doc.htm
