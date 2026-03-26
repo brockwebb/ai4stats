@@ -207,7 +207,7 @@ This is forward-looking. The infrastructure does not yet exist at scale. But the
 :width: 100%
 :alt: SDL Risk Classification Decision Tree for AI Deployments at Federal Statistical Agencies
 
-SDL Risk Classification Decision Tree for AI Deployments at Federal Statistical Agencies. Decision nodes assess data sensitivity, model memorization capacity, access mode, and privacy controls. Terminal nodes map to four risk tiers with corresponding review requirements. Framework alignment annotations reference NIST AI RMF, NIST AI 600-1, FCSM Data Protection Toolkit, and OMB M-25-21.
+SDL Risk Classification Decision Tree for AI Deployments at Federal Statistical Agencies. Decision nodes assess data sensitivity, model memorization capacity, access mode, and privacy controls. Terminal nodes map to four risk tiers with corresponding review requirements. Framework alignment annotations reference NIST AI RMF, NIST AI 600-1, and the FCSM Data Protection Toolkit.
 ```
 
 ## 8. SDL Evaluation Checklist for AI Deployments
